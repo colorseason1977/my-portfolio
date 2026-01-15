@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nobuyuki Baba | Strategic HR Portfolio</title>
+    <!-- 極太サンセリフと等幅フォントの組み合わせ -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Mode (Pop Retro) */
+            --bg-color: #f4f3ee;
+            --text-color: #2C3E50;
+            --accent-color: #E74C3C;
+            --secondary-accent: #f1c40f;
+            --shadow-color: #2C3E50;
+            --grid-color: rgba(44, 62, 80, 0.1);
+            --transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .dark-mode {
+            /* Dark Mode (Cyber Terminal) */
+            --bg-color: #2C3E50;
+            --text-color: #f4f3ee;
+            --accent-color: #E74C3C;
+            --secondary-accent: #f1c40f;
+            --shadow-color: #000000;
+            --grid-color: rgba(244, 243, 238, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Space Mono', monospace;
+            overflow-x: hidden;
+            /* 方眼紙のようなグリッド背景 */
+            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transition: background-color 0.3s ease;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .brutal-border {
+            border: 4px solid var(--text-color);
+        }
+
+        .brutal-shadow {
+            box-shadow: 10px 10px 0px var(--shadow-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* --- Marquee (常に流れ続ける文字) --- */
+        .marquee {
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 12px 0;
+            border-bottom: 4px solid var(--text-color);
+            overflow: hidden;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- Hero Section (Split Screen) --- */
+        .hero {
+            display: flex;
+            min-height: 90vh;
+            border-bottom: 4px solid var(--text-color);
+            flex-wrap: wrap;
+        }
+
+        .hero-left {
+            flex: 1.2;
+            min-width: 350px;
+            padding: 6rem 3rem;
+            border-right: 4px solid var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background: white;
+        }
+
+        .hero-right {
+            flex: 0.8;
+            min-width: 350px;
+            background: var(--secondary-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            margin-bottom: 2rem;
+            z-index: 2;
+        }
+
+        /* 回転するバッジ */
+        .badge {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 150px;
+            height: 150px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+            animation: rotateBadge 12s linear infinite;
+            border: 4px solid var(--text-color);
+            z-index: 10;
+        }
+
+        @keyframes rotateBadge {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- Window Style (About) --- */
+        .window {
+            background: var(--bg-color);
+            margin-top: 4rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .window-header {
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .window-btn {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--bg-color);
+        }
+
+        .window-content {
+            padding: 3rem;
+        }
+
+        /* --- Skills (Stickers) --- */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 3rem 0;
+        }
+
+        .sticker {
+            background: white;
+            color: var(--text-color);
+            padding: 15px 25px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            cursor: crosshair;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .sticker:hover {
+            transform: scale(1.15) rotate(0deg) !important;
+            background: var(--secondary-accent);
+            z-index: 10;
+        }
+
+        /* --- Works (Halftone Cards) --- */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .work-card {
+            background: white;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .work-img-container {
+            width: 100%;
+            height: 220px;
+            background: #ddd;
+            border-bottom: 4px solid var(--text-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ハーフトーン風ドットオーバーレイ */
+        .work-img-container::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(var(--text-color) 1px, transparent 1px);
+            background-size: 4px 4px;
+            opacity: 0.3;
+            transition: var(--transition);
+        }
+
+        .work-card:hover .work-img-container::after {
+            opacity: 0;
+        }
+
+        .work-img-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            text-align: center;
+            width: 90%;
+        }
+
+        .work-card:hover {
+            transform: translate(-8px, -8px);
+            box-shadow: 18px 18px 0px var(--shadow-color);
+        }
+
+        .work-info {
+            padding: 2rem;
+        }
+
+        /* --- Contact --- */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1.2rem;
+            background: white;
+            border: 4px solid var(--text-color);
+            font-family: inherit;
+            font-size: 1.2rem;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            background: var(--secondary-accent);
+        }
+
+        .huge-btn {
+            background: var(--accent-color);
+            color: white;
+            padding: 2.5rem;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-family: 'Archivo Black', sans-serif;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+            margin-top: 1rem;
+            border: 4px solid var(--text-color);
+        }
+
+        .huge-btn:hover {
+            background: var(--secondary-accent);
+            color: var(--text-color);
+        }
+
+        .huge-btn:active {
+            transform: translate(8px, 8px);
+            box-shadow: 0px 0px 0px var(--shadow-color);
+        }
+
+        /* --- Scroll Reveal --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: 0.8s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--secondary-accent);
+            cursor: pointer;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-left { border-right: none; border-bottom: 4px solid var(--text-color); padding: 4rem 1.5rem; }
+            .badge { width: 100px; height: 100px; font-size: 0.7rem; top: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            EST. 1977.02.20 * STRATEGIC HR * ORGANIZATIONAL DESIGN * BPO CENTER MANAGEMENT * RECRUITMENT STRATEGY * NAGASAKI PRIDE * EST. 1977.02.20 * STRATEGIC HR * ORGANIZATIONAL DESIGN * BPO CENTER MANAGEMENT * RECRUITMENT STRATEGY * NAGASAKI PRIDE *
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-left">
+            <div class="badge brutal-border">STRATEGIC<br>HR LEADER<br>SINCE 1990s</div>
+            <p style="font-weight: bold; margin-bottom: 0.5rem; letter-spacing: 2px;">RESUME ARCHIVE_2026</p>
+            <h1 class="hero-title">NOBUYUKI<br>BABA.</h1>
+            <p style="font-size: 1.4rem; font-weight: bold; background: var(--secondary-accent); display: inline-block; padding: 5px 15px;" class="brutal-border">
+                経営と現場を繋ぐ「人」のスペシャリスト
+            </p>
+        </div>
+        <div class="hero-right">
+            <div class="brutal-border brutal-shadow" style="width: 85%; height: 85%; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+                <div style="font-size: 6rem;">(⌐■_■)</div>
+                <div style="margin-top: 1rem; font-weight: 800; text-align: center;">
+                    NAGASAKI / ISAHAYA<br>STRATEGIC_MINDSET.SH
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        
+        <!-- About Section (Window style) -->
+        <section class="reveal" id="about">
+            <div class="window brutal-border brutal-shadow">
+                <div class="window-header">
+                    <span>BIO_SUMMARY.EXE</span>
+                    <div class="window-controls">
+                        <div class="window-btn"></div>
+                        <div class="window-btn" style="background: var(--accent-color);"></div>
+                    </div>
+                </div>
+                <div class="window-content">
+                    <h2 style="margin-bottom: 1.5rem; font-size: 2.5rem;">組織の成長を加速させる、ロジカルな人事戦略。</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                        1977年2月20日生まれ。長崎県諫早市多良見町の新しい一軒家で、妻の祥子、小学3年生の息子・海秀、娘の美怜とともに暮らしています。馬場 敬行（Nobuyuki Baba）です。
+                    </p>
+                    <p style="font-size: 1.1rem;">
+                        これまでのキャリアでは、ONE DEJIMA株式会社での中期経営計画に基づく人事・組織戦略の立案、トランスコスモス株式会社（富士通HRプロフェショナルズへの出向含む）でのBPOセンター長崎への業務移管・安定運用など、大規模な組織変革とオペレーション構築を主導してきました。私のミッションは、経営のビジョンを具体的な「人」の施策へと落とし込み、持続可能な成長を実現することです。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills (Stickers) -->
+        <section class="reveal" style="margin-top: 8rem;">
+            <h2 style="font-size: 3rem; background: var(--secondary-accent); display: inline-block; padding: 0 15px;" class="brutal-border">EXPERTISE_TAGS</h2>
+            <div class="skills-container">
+                <div class="sticker brutal-border brutal-shadow">人事戦略立案</div>
+                <div class="sticker brutal-border brutal-shadow">組織戦略・要員計画</div>
+                <div class="sticker brutal-border brutal-shadow">BPOセンター長崎構築</div>
+                <div class="sticker brutal-border brutal-shadow">産学連携インターン</div>
+                <div class="sticker brutal-border brutal-shadow">給与・人事サービス移管</div>
+                <div class="sticker brutal-border brutal-shadow">GHQ業務移管(シンガポール)</div>
+                <div class="sticker brutal-border brutal-shadow">採用ブランディング</div>
+                <div class="sticker brutal-border brutal-shadow">広報・ブランド認知拡大</div>
+            </div>
+        </section>
+
+        <!-- Works Section -->
+        <section class="reveal" style="margin-top: 8rem;">
+            <h2 style="font-size: 3rem; background: var(--accent-color); color: white; display: inline-block; padding: 0 15px;" class="brutal-border">CORE_PROJECTS</h2>
+            <div class="works-grid">
+                <!-- ONE DEJIMA -->
+                <div class="work-card brutal-border brutal-shadow">
+                    <div class="work-img-container">
+                        <div class="work-img-text">STRATEGIC HR @ ONE DEJIMA</div>
+                    </div>
+                    <div class="work-info">
+                        <h3>中期経営計画に基づく組織設計</h3>
+                        <p>経営と現場を繋ぐ視点で採用戦略を再構築。大学連携を通じた実践型インターンにより、国内外から優秀な人材を獲得しました。</p>
+                    </div>
+                </div>
+                <!-- BPO Center -->
+                <div class="work-card brutal-border brutal-shadow">
+                    <div class="work-img-container" style="background: var(--secondary-accent);">
+                        <div class="work-img-text">BPO OPS @ TRANSCOSMOS</div>
+                    </div>
+                    <div class="work-info">
+                        <h3>BPOセンター長崎の安定運用</h3>
+                        <p>富士通HRプロフェショナルズからの人事業務移管を主導。マニュアル整備とプロセス最適化により、品質維持と効率化を両立。</p>
+                    </div>
+                </div>
+                <!-- Global Transfer -->
+                <div class="work-card brutal-border brutal-shadow">
+                    <div class="work-img-container" style="background: var(--text-color);">
+                        <div class="work-img-text" style="color: white;">GLOBAL BPO TRANSFER</div>
+                    </div>
+                    <div class="work-info">
+                        <h3>シンガポールGHQからの業務移管</h3>
+                        <p>シンガポール本社からの業務を長崎へ集約。グローバルな基準をローカルの運用体制へと落とし込み、安定稼働を実現しました。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="reveal" style="margin-top: 8rem; margin-bottom: 8rem;">
+            <h2 style="font-size: 3rem; background: var(--text-color); color: var(--bg-color); display: inline-block; padding: 0 15px;" class="brutal-border">CONNECT_WITH_ME</h2>
+            <div class="window brutal-border brutal-shadow" style="margin-top: 2rem; background: white;">
+                <div class="window-content">
+                    <form class="contact-form" onsubmit="event.preventDefault(); alert('メッセージを送信しました（シミュレーション）');">
+                        <div class="input-group">
+                            <label>YOUR_NAME</label>
+                            <input type="text" value="馬場 敬行" class="brutal-border">
+                        </div>
+                        <div class="input-group">
+                            <label>YOUR_EMAIL</label>
+                            <input type="email" placeholder="email@example.com" class="brutal-border">
+                        </div>
+                        <div class="input-group">
+                            <label>MESSAGE</label>
+                            <textarea rows="5" placeholder="ご質問やご相談があればこちらへ" class="brutal-border"></textarea>
+                        </div>
+                        <button type="submit" class="huge-btn brutal-border brutal-shadow">SEND_DATA.CMD</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="theme-toggle brutal-border brutal-shadow" onclick="toggleTheme()" title="テーマ切り替え">🌓</div>
+
+    <script>
+        // ダークモード切り替え
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // スキルステッカーをランダムに傾ける
+        const stickers = document.querySelectorAll('.sticker');
+        stickers.forEach(sticker => {
+            const randomRot = (Math.random() - 0.5) * 20; // -10deg to 10deg
+            sticker.style.transform = `rotate(${randomRot}deg)`;
+        });
+
+        // スクロールに応じたふわっと（ポンっと）表示
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add("active");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", reveal);
+        // 初回ロード時にも実行
+        window.onload = reveal;
+    </script>
+</body>
+</html>
